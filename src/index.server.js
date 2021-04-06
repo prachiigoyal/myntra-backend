@@ -37,7 +37,7 @@ mongoose
     console.log("Database connected");
   });
 
-// app.use(cors());
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header(
