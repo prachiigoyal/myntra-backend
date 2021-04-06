@@ -16,14 +16,13 @@ const pageRoutes = require("./routes/admin/page");
 const addressRoutes = require("./routes/address");
 const orderRoutes = require("./routes/order");
 const adminOrderRoute = require("./routes/admin/order.routes");
+const storeRoutes =require("./routes/store")
 
 //environment variable or you can say constants
 env.config();
 
 // mongodb connection
 //mongodb+srv://root:<password>@cluster0.8pl1w.mongodb.net/<dbname>?retryWrites=true&w=majority
-//mongodb+srv://myntra_user:<password>@cluster0.xkukp.mongodb.net
-//mongodb+srv://myntra_user:<password>@cluster0.xkukp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.oimlf.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
@@ -38,7 +37,13 @@ mongoose
     console.log("Database connected");
   });
 
-app.use(cors());
+// app.use(cors());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "uploads")));
 app.use("/api", authRoutes);
@@ -51,6 +56,7 @@ app.use("/api", pageRoutes);
 app.use("/api", addressRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", adminOrderRoute);
+app.use("/api", storeRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
