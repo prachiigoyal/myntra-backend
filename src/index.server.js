@@ -42,7 +42,11 @@ mongoose
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://hackerramp-myntra-frontend.herokuapp.com/"
+    "https://hackerramp-myntra-frontend.herokuapp.com"
+  );
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://hackerramp-admin.herokuapp.com"
   );
   res.header('Access-Control-Allow-Origin', '*');
   next();
